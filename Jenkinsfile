@@ -37,7 +37,10 @@ pipeline {
             steps {
                 container('nodejs') { 
                     echo "1. Execute container content in Kubernetes pod" 
-                    sh 'npm install'
+                    git url: 'git@github.wdf.sap.corp:sf-workzone-for-hr/sf-workzone-contentpackage.git', branch: 'master'
+                    sh 'cd sf-workzone-contentpackage'
+                    sh 'ls -al'
+                    //sh 'npm install'
                 }
             }
         }
