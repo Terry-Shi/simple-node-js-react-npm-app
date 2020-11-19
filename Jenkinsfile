@@ -33,23 +33,23 @@ pipeline {
     }
     stages {
         stage('Build') {
-            echo "1. Execute container content in Kubernetes pod"        
-
+                   
             steps {
+                echo "1. Execute container content in Kubernetes pod" 
                 sh 'npm install'
             }
         }
         stage('Test') {
-            echo "2. Execute container content in Kubernetes pod"  
-
+             
             steps {
+                echo "2. Execute container content in Kubernetes pod" 
                 sh './jenkins/scripts/test.sh'
             }
         }
         stage('Deliver') {
-            echo "3. dExecute container content in Kubernetes pod"        
-
+                  
             steps {
+                echo "3. dExecute container content in Kubernetes pod"  
                 echo currentBuild.result
                 //xsh './jenkins/scripts/deliver.sh'
                 //input message: 'Finished using the web site? (Click "Proceed" to continue)'
