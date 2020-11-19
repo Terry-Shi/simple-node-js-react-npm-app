@@ -11,7 +11,7 @@ spec:
         - mountPath: /home/jenkins/agent
           name: workspace-volume
     - name: nodejs
-      image: node:alpine
+      image: node:15
       command:
         - cat
       tty: true
