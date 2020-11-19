@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: jnlp
+      image: docker.wdf.sap.corp:50001/sap-production/jnlp-alpine:3.26.1-sap-02
+      args:
+        - \$(JENKINS_SECRET)
+        - \$(JENKINS_NAME)
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+    - name: nodejs
+      image: node:alpine
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+    - name: sapjvm8
+      image: docker.wdf.sap.corp:50000/build-agent/sapjvm8:latest
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - mountPath: /home/jenkins/agent
+          name: workspace-volume
+  volumes:
+    - name: volume-1
+      hostPath:
+        path: /var/run/docker.sock
+    - name: workspace-volume
+      emptyDir:
+        medium: ''

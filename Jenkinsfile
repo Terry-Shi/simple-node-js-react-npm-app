@@ -19,31 +19,41 @@
 //     }
 // }
 pipeline {
+    
     agent {
-        docker {
-            image 'node:15-alpine' 
-            args '-p 3000:3000' 
+        kubernetes {
+            defaultContainer 'jnlp'
+            yamlFile 'jenkins/mainPod.yaml'
         }
+
     }
+    
     environment {
         CI = 'true'
     }
     stages {
         stage('Build') {
+            echo "1. Execute container content in Kubernetes pod"        
+
             steps {
                 sh 'npm install'
             }
         }
         stage('Test') {
+            echo "2. Execute container content in Kubernetes pod"  
+
             steps {
                 sh './jenkins/scripts/test.sh'
             }
         }
         stage('Deliver') {
+            echo "3. dExecute container content in Kubernetes pod"        
+
             steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                echo currentBuild.result
+                //xsh './jenkins/scripts/deliver.sh'
+                //input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                //xsh './jenkins/scripts/kill.sh'
             }
         }
     }
