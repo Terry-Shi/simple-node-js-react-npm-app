@@ -33,27 +33,34 @@ pipeline {
     }
     stages {
         stage('Build') {
-                   
+                  
             steps {
-                echo "1. Execute container content in Kubernetes pod" 
-                sh 'npm install'
+                container('nodejs') { 
+                    echo "1. Execute container content in Kubernetes pod" 
+                    sh 'npm install'
+                }
             }
         }
         stage('Test') {
              
             steps {
-                echo "2. Execute container content in Kubernetes pod" 
-                sh './jenkins/scripts/test.sh'
+                container('sapjvm8') {
+                    echo "2. Execute container content in Kubernetes pod" 
+                    sh 'java -version'
+                     //sh './jenkins/scripts/test.sh'
+                }
             }
         }
         stage('Deliver') {
                   
             steps {
-                echo "3. dExecute container content in Kubernetes pod"  
-                echo currentBuild.result
-                //xsh './jenkins/scripts/deliver.sh'
-                //input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                //xsh './jenkins/scripts/kill.sh'
+                container('sapjvm8') {
+                    echo "3. dExecute container content in Kubernetes pod"  
+                    echo currentBuild.result
+                    //xsh './jenkins/scripts/deliver.sh'
+                    //input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                    //xsh './jenkins/scripts/kill.sh'
+                }
             }
         }
     }
