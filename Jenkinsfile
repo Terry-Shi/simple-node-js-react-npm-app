@@ -37,6 +37,7 @@ pipeline {
             steps {
                 container('nodejs') { 
                     echo "1. Execute container content in Kubernetes pod" 
+                    sh 'mkdir /root/.ssh && chmod 0700 /root/.ssh'
                     sh 'ssh-keyscan -t rsa github.wdf.sap.corp >> ~/.ssh/known_hosts'
                     git url: 'git@github.wdf.sap.corp:sf-workzone-for-hr/sf-workzone-contentpackage.git', branch: 'master'
                     sh 'cd sf-workzone-contentpackage'
