@@ -12,11 +12,17 @@ spec:
           name: workspace-volume
     - name: nodejs
       image: node:alpine
+      command:
+        - cat
+      tty: true
       volumeMounts:
         - mountPath: /home/jenkins/agent
           name: workspace-volume
     - name: sapjvm8
       image: docker.wdf.sap.corp:50000/build-agent/sapjvm8:latest
+      command:
+        - cat
+      tty: true
       volumeMounts:
         - mountPath: /home/jenkins/agent
           name: workspace-volume
